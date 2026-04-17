@@ -5,8 +5,7 @@ class TaskManagerException(Exception):
 
 class InvalidSource(TaskManagerException):
     """Ошибка ресурса"""
-    def __init__(self, protocol: str) -> None:
-        super().__init__('Ресурс не подходит по протоколу')
+    pass
 
 class ValidationError(TaskManagerException):
     """Ошибка валидации данных"""

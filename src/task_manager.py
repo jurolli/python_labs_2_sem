@@ -3,6 +3,8 @@ from src.models.contract import TaskContract
 from typing import List, Any
 import logging
 
+logger = logging.getLogger(__name__)
+
 class TaskManager:
     """Класс, работающий с источниками, соблюдающими контракт"""
     def __init__(self):
@@ -16,13 +18,14 @@ class TaskManager:
         self.sources.append(source)
         logging.info(f"Источник {type(source).__name__} успешно добавлен")
 
-    def run(self):
+    def run(self, printt):
         for source in self.sources:
-            print(f"Ресурс {type(source).__name__}")
-            print(f"\nОбработка источника: {type(source).__name__}")
+            logger.info(f"Начало получения данных из: {type(source).__name__}")
+            count = 0
             for task in source.get_tasks():
-                urgent_str = "[СРОЧНО]" if task.is_urgent else ""
-                print(f"Задача [{task.id}]")
-                print(f"{task} {urgent_str}")
-                print(f"    Описание: {task.description}")
-                print(f"    Создано: {task.created_at}")
+                count += 1
+                logger.info(f"Извлечена задача ID {task.id} из {type(source).__name__}")
+            if printt:
+                printt(task)
+            logger.info(f"Источник {type(source).__name__} обработан. Всего задач: {count}")
+

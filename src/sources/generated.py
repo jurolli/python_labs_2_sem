@@ -10,4 +10,4 @@ class GeneratorSource:
 
     def get_tasks(self) -> Iterable[Task]:
         for i in range(1, self.task_count + 1):
-            yield Task(id=i, description=f"Generated task {i}")
+            yield Task(id=i, payload=f"Generated task {i}")

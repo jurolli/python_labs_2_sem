@@ -18,7 +18,7 @@ def test_api_source():
     source = ApiSource()
     tasks = list(source.get_tasks())
     assert len(tasks) > 0
-    assert tasks[0].description == "Task from API"
+    assert tasks[0].payload == "Task from API"
 
 def test_file_source_valid(tmp_path):
     """Проверка чтения корректного JSON файла"""

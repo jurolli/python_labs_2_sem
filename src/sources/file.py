@@ -26,7 +26,6 @@ class FileSource:
         return data
 
     def get_tasks(self) -> Iterable[Task]:
-        """"""
         data = self.read_json()
         if not isinstance(data, list):
             raise ValidationError(f"Корневой элемент в {self._file_path} должен быть списком")
@@ -40,7 +39,7 @@ class FileSource:
             
             yield Task(
                 id=item["id"],
-                description=item["payload"],
+                payload=item["payload"],
                 priority=item.get("priority", 1),
                 status=item.get("status", "New"),
             )

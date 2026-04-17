@@ -4,5 +4,5 @@ from src.models.task import Task
 @runtime_checkable
 class TaskContract(Protocol):
     def get_tasks(self) -> Iterable[Task]: ...
-    """Любой класс методом get_tasks(self), 
-    который возвращающает итерируемый Task считается TaskContract"""
+    """Любой класс с методом get_tasks(self), 
+    который возвращает итерируемый Task считается TaskContract"""
