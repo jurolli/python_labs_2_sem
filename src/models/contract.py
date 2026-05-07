@@ -6,3 +6,10 @@ class TaskContract(Protocol):
     def get_tasks(self) -> Iterable[Task]: ...
     """Любой класс с методом get_tasks(self), 
     который возвращает итерируемый Task считается TaskContract"""
+
+@runtime_checkable
+class AsyncHandlerContract(Protocol):
+    async def can_handle(self, task: Task) -> bool: ...
+    """Может ли обработчик взять задачу"""
+
+    async def handle(self, task: Task) -> None: ...

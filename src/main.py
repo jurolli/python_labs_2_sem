@@ -4,6 +4,9 @@ from src.sources.generated import GeneratorSource
 from src.task_manager import TaskManager
 from src.models.task import Task
 from src.models.queue import TaskQueue
+import asyncio
+from src.executor import AsyncExecutor
+from src.handlers import UrgentTaskHandler, DefaultTaskHandler
 
 import logging
 
@@ -27,6 +30,22 @@ def format_task_output(task: Task):
     )
     print(output)
 
+
+
+
+# для 4 лаболаторной
+
+async def async_main(sync_queue):
+    executor = AsyncExecutor(workers_count=2)
+
+    executor.add_handler(UrgentTaskHandler())
+    executor.add_handler(DefaultTaskHandler())
+
+    async with executor:
+        print("\nЗагрузка задач в асинхронную очередь")
+        for task in sync_queue:
+            await executor.submit(task)
+
 def main():
 
     manager = TaskManager()
@@ -40,11 +59,17 @@ def main():
 
     manager.run(printt=format_task_output)
 
+# для третьей лаболаторной работы
+    # queue = TaskQueue(sources=manager.sources)
+
+    # for task in queue:
+    #     urgent = "!!!" if task.is_urgent else ""
+    #     print(f"[{task.priority:2d}] Задача {task.id}: {task.payload} {urgent}")
+
     queue = TaskQueue(sources=manager.sources)
 
-    for task in queue:
-        urgent = "!!!" if task.is_urgent else ""
-        print(f"[{task.priority:2d}] Задача {task.id}: {task.payload} {urgent}")
+    asyncio.run(async_main(queue))
+
 
 
 if __name__ == "__main__":
